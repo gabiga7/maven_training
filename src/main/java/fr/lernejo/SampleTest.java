@@ -1,41 +1,54 @@
 package fr.lernejo;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import fr.lernejo.Sample.Operation;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class SampleTest {
-    private Sample instance;
-
-    @BeforeEach
-    public void setUp() {
-        instance = new Sample();
-    }
-
+class SampleTest {
     @Test
-    public void testAddition() {
-        assertEquals(instance.op(Operation.ADD, 5, 133), 138);
-        assertEquals(instance.op(Operation.ADD, 1, 1), 2);
+    void op_add_basic() {
+        Sample sample = new Sample();
+        Assertions.assertEquals(sample.op(Sample.Operation.ADD, 10, 10), 20);
     }
-
     @Test
-    public void testMult() {
-        assertEquals(instance.op(Operation.MULT, 5, 5), 25);
-        assertEquals(instance.op(Operation.MULT, 6, 7), 42);
-        assertEquals(instance.op(Operation.MULT, 0, 48978927), 0);
+    void op_add_neg() {
+        Sample sample = new Sample();
+        Assertions.assertEquals(sample.op(Sample.Operation.ADD, 10, -10), 0);
     }
-
     @Test
-    public void testFact() {
-        assertEquals(instance.fact(5), 120);
-        assertEquals(instance.fact(1), 1);
-        assertEquals(instance.fact(0), 1);
-        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> instance.fact(-1));
-        assertEquals("N should be positive", e.getMessage());
+    void op_mult_basic() {
+        Sample sample = new Sample();
+        Assertions.assertEquals(sample.op(Sample.Operation.MULT, 10, 10), 100);
+    }
+    @Test
+    void op_mult_neg() {
+        Sample sample = new Sample();
+        Assertions.assertEquals(sample.op(Sample.Operation.MULT, 10, -10), -100);
+    }
+    @Test
+    void op_mult_zero() {
+        Sample sample = new Sample();
+        Assertions.assertEquals(sample.op(Sample.Operation.MULT, 10, 0), 0);
+    }
+    @Test
+    void fact_basic() {
+        Sample sample = new Sample();
+        Assertions.assertEquals(sample.fact(5), 120);
+    }
+    @Test
+    void fact_one() {
+        Sample sample = new Sample();
+        Assertions.assertEquals(sample.fact(1), 1);
+    }
+    @Test
+    void fact_zero() {
+        Sample sample = new Sample();
+        Assertions.assertEquals(sample.fact(0), 1);
+    }
+    @Test
+    void fact_neg() {
+        Sample sample = new Sample();
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sample.fact(-5));
     }
 }
-
